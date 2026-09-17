@@ -26,6 +26,8 @@ SignalManager="*uid://bdqgkj2h8a68f"
 
 window/size/viewport_width=1440
 window/size/viewport_height=1080
+window/size/window_width_override=1180
+window/size/window_height_override=886
 window/stretch/mode="canvas_items"
 
 [dotnet]
