@@ -1,6 +1,38 @@
-[gd_scene format=3 uid="uid://thiiij6vbtn1"]
+[gd_scene format=4 uid="uid://thiiij6vbtn1"]
 
 [ext_resource type="Script" uid="uid://bhbsoadqhqgau" path="res://Scenes/Level/Level.cs" id="1_vbawi"]
+[ext_resource type="Texture2D" uid="uid://b4e3hjnve65u" path="res://Assets/spritesheet.png" id="2_3hkb6"]
 
-[node name="Level" type="Node2D" unique_id=1144316173]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4dwx7"]
+resource_name = "primary"
+texture = ExtResource("2_3hkb6")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_vbawi"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_4dwx7")
+
+[node name="Level" type="Node" unique_id=1571236048 node_paths=PackedStringArray("_floor")]
 script = ExtResource("1_vbawi")
+_floor = NodePath("Floor")
+
+[node name="Floor" type="TileMapLayer" parent="." unique_id=1715903909]
+tile_map_data = PackedByteArray("AAACAAEAAAAEAAAAAAAFAAQAAAAEAAAAAAABAAMAAAAEAAAAAAAGAAAAAAAEAAAAAAAHAAIAAAAEAAAAAAAIAAIAAAAEAAAAAAAJAAIAAAAEAAAAAAA=")
+tile_set = SubResource("TileSet_vbawi")
