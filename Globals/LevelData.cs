@@ -1,15 +1,46 @@
+using System.Collections.Generic;
 using Godot;
-using System;
+using Newtonsoft.Json;
 
 public partial class LevelData : Node
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public static LevelData Instance {get; private set;}
+
+	private const string LEVEL_DATA_PATH = "res://Data/LevelData.json";
+
+	public Dictionary<string, LevelLayout> LevelDataDictionary { get; private set; } = new();
+
+	public override void _EnterTree()
 	{
+		Instance = this;
+		LoadLevelData();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	private void LoadLevelData()
 	{
+		if (!FileAccess.FileExists(LEVEL_DATA_PATH))
+		{
+			GD.PrintErr("LEVEL_DATA_PARTH file not found!");
+			
+			return;
+		}
+
+		string jsonDataString = FileAccess.GetFileAsString(LEVEL_DATA_PATH);
+		
+		if (string.IsNullOrEmpty(jsonDataString))
+		{
+			GD.PrintErr("jsonDataString empty!");
+			
+			return;
+		}
+
+		LevelDataDictionary = JsonConvert.DeserializeObject<Dictionary<string, LevelLayout>>(jsonDataString);
+
+		foreach (var layout in LevelDataDictionary.Values)
+		{
+			layout.TileLayers.Convert();
+		}
+
+		GD.Print("Data loaded!");
 	}
 }
