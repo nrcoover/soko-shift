@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bhbsoadqhqgau" path="res://Scenes/Level/Level.cs" id="1_vbawi"]
 [ext_resource type="Texture2D" uid="uid://b4e3hjnve65u" path="res://Assets/spritesheet.png" id="2_3hkb6"]
+[ext_resource type="PackedScene" uid="uid://5j426142i2k5" path="res://Scenes/Player/Player.tscn" id="3_4dwx7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4dwx7"]
 resource_name = "primary"
@@ -29,7 +30,7 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_4dwx7")
 
-[node name="Level" type="Node" unique_id=1571236048 node_paths=PackedStringArray("_tileLayers", "_floorTiles", "_wallsTiles", "_targetsTiles", "_boxesTiles", "_debug")]
+[node name="Level" type="Node" unique_id=1571236048 node_paths=PackedStringArray("_tileLayers", "_floorTiles", "_wallsTiles", "_targetsTiles", "_boxesTiles", "_debug", "_player")]
 script = ExtResource("1_vbawi")
 _tileLayers = NodePath("TileLayers")
 _floorTiles = NodePath("TileLayers/Floor")
@@ -37,6 +38,7 @@ _wallsTiles = NodePath("TileLayers/Walls")
 _targetsTiles = NodePath("TileLayers/Targets")
 _boxesTiles = NodePath("TileLayers/Boxes")
 _debug = NodePath("Debug")
+_player = NodePath("Player")
 
 [node name="TileLayers" type="Node2D" parent="." unique_id=1435395518]
 
@@ -53,7 +55,10 @@ tile_set = SubResource("TileSet_vbawi")
 tile_set = SubResource("TileSet_vbawi")
 
 [node name="Debug" type="Sprite2D" parent="." unique_id=1230087000]
+visible = false
 self_modulate = Color(0, 0, 0.7110254, 1)
 texture = ExtResource("2_3hkb6")
 region_enabled = true
 region_rect = Rect2(212, 23, 24, 22)
+
+[node name="Player" parent="." unique_id=2042970125 instance=ExtResource("3_4dwx7")]

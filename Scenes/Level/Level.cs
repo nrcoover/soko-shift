@@ -13,10 +13,54 @@ public partial class Level : Node
 	[Export] private TileMapLayer _targetsTiles;
 	[Export] private TileMapLayer _boxesTiles;
 	[Export] private Sprite2D _debug;
+	[Export] private AnimatedSprite2D _player;
+
+	private Vector2I _playerTile;
 
 	public override void _Ready()
 	{
 		SetupLevel();
+	}
+
+  public override void _UnhandledInput(InputEvent @event)
+  {
+    Vector2I moveInput = GetMoveInput(@event);
+		MovePlayer(moveInput);
+  }
+
+	private Vector2I GetMoveInput(InputEvent @event)
+	{
+		Vector2I moveDirection = Vector2I.Zero;
+
+		if (Input.IsActionJustPressed("left"))
+		{
+			moveDirection = Vector2I.Left;
+			_player.Play("left");
+		}
+		else if (Input.IsActionJustPressed("right"))
+		{
+			moveDirection = Vector2I.Right;
+			_player.Play("right");
+		}
+		else if (Input.IsActionJustPressed("up"))
+		{
+			moveDirection = Vector2I.Up;
+			_player.Play("up");
+		}
+		else if (Input.IsActionJustPressed("down"))
+		{
+			moveDirection = Vector2I.Down;
+			_player.Play("down");
+		}
+
+		return moveDirection;
+	}
+
+	private void MovePlayer(Vector2I moveInput)
+	{
+		Vector2I destinationTile = _playerTile + moveInput;
+		
+		PlacePlayerOnTile(destinationTile);
 	}
 
 	private void ClearTiles()
@@ -72,7 +116,9 @@ public partial class Level : Node
 
 	private void PlacePlayerOnTile(Vector2I tileCoordinate)
 	{
-		_debug.GlobalPosition = _floorTiles.ToGlobal(_floorTiles.MapToLocal(tileCoordinate));	
+		_player.GlobalPosition = _floorTiles.ToGlobal(_floorTiles.MapToLocal(tileCoordinate));
+
+		_playerTile = tileCoordinate;
 	}
 
 	private void SetupLevel()
