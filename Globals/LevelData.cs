@@ -43,4 +43,9 @@ public partial class LevelData : Node
 
 		GD.Print("Data loaded!");
 	}
+
+	public static LevelLayout GetLevelData(string levelNumber)
+	{
+		return Instance.LevelDataDictionary[levelNumber];
+	}
 }
