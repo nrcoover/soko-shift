@@ -32,22 +32,22 @@ public partial class Level : Node
 	{
 		Vector2I moveDirection = Vector2I.Zero;
 
-		if (Input.IsActionJustPressed("left"))
+		if(Input.IsActionJustPressed("left"))
 		{
 			moveDirection = Vector2I.Left;
 			_player.Play("left");
 		}
-		else if (Input.IsActionJustPressed("right"))
+		else if(Input.IsActionJustPressed("right"))
 		{
 			moveDirection = Vector2I.Right;
 			_player.Play("right");
 		}
-		else if (Input.IsActionJustPressed("up"))
+		else if(Input.IsActionJustPressed("up"))
 		{
 			moveDirection = Vector2I.Up;
 			_player.Play("up");
 		}
-		else if (Input.IsActionJustPressed("down"))
+		else if(Input.IsActionJustPressed("down"))
 		{
 			moveDirection = Vector2I.Down;
 			_player.Play("down");
@@ -59,13 +59,62 @@ public partial class Level : Node
 	private void MovePlayer(Vector2I moveInput)
 	{
 		Vector2I destinationTile = _playerTile + moveInput;
-		
+
+		if(CellIsWall(destinationTile))
+		{
+			return;
+		}
+
+		if(CellIsBox(destinationTile) && !BoxCanMove(destinationTile, moveInput))
+		{
+			return;
+		}
+
+		if(CellIsBox(destinationTile)) {
+			MoveBox(destinationTile, moveInput);	
+		}
+
 		PlacePlayerOnTile(destinationTile);
+	}
+
+	private void MoveBox(Vector2I boxCell, Vector2I direction)
+	{
+		Vector2I destinationCell = boxCell + direction;
+		_boxesTiles.EraseCell(boxCell);
+
+		TileLayerType layerType = TileLayerType.Boxes;
+
+		if(_targetsTiles.GetUsedCells().Contains(destinationCell))
+		{
+			layerType = TileLayerType.TargetBoxes;
+		}
+		
+		_boxesTiles.SetCell(destinationCell, (int)TileAtlass.primary, GetAtlasCoordinate(layerType));
+	}
+
+	private bool CellIsWall(Vector2I cell)
+	{
+		return _wallsTiles.GetUsedCells().Contains(cell);
+	}
+
+	private bool CellIsBox(Vector2I cell)
+	{
+		return _boxesTiles.GetUsedCells().Contains(cell);
+	}
+
+	private bool CellIsEmpty(Vector2I cell)
+	{
+		return !CellIsWall(cell) && !CellIsBox(cell);
+	}
+
+	private bool BoxCanMove(Vector2I boxCell, Vector2I direction)
+	{
+		return CellIsEmpty(boxCell + direction);
 	}
 
 	private void ClearTiles()
 	{
-		foreach (var tileLayer in _tileLayers.GetChildren())
+		foreach(var tileLayer in _tileLayers.GetChildren())
 		{
 			if (tileLayer is TileMapLayer layer)
 			{
@@ -76,7 +125,7 @@ public partial class Level : Node
 
 	private Vector2I GetAtlasCoordinate(TileLayerType layerType)
 	{
-		switch (layerType)
+		switch(layerType)
 		{
 			case TileLayerType.Walls:
 				return new Vector2I(0, 0);
@@ -100,7 +149,7 @@ public partial class Level : Node
 
 	private void SetupLayer(TileLayerType layerType, TileMapLayer mapLayer, LevelLayout levelLayout)
 	{
-		foreach (var tileCoordinate in levelLayout.TileLayers.GetLayerTiles(layerType))
+		foreach(var tileCoordinate in levelLayout.TileLayers.GetLayerTiles(layerType))
 		{
 			AddTile(layerType, tileCoordinate, mapLayer);
 		}
