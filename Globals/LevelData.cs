@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Newtonsoft.Json;
 
@@ -47,5 +48,10 @@ public partial class LevelData : Node
 	public static LevelLayout GetLevelData(string levelNumber)
 	{
 		return Instance.LevelDataDictionary[levelNumber];
+	}
+
+	public static string[] GetLevelNumbers()
+	{
+		return Instance.LevelDataDictionary.Keys.ToArray();
 	}
 }

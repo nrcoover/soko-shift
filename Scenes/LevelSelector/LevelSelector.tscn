@@ -1,10 +1,63 @@
 [gd_scene format=3 uid="uid://cdk43k1b30dhq"]
 
 [ext_resource type="Script" uid="uid://bw3vega7k2uqb" path="res://Scenes/LevelSelector/LevelSelector.cs" id="1_1ier4"]
+[ext_resource type="Texture2D" uid="uid://0dpjrnl6m2lw" path="res://Assets/Bg.png" id="2_8ihno"]
+[ext_resource type="FontFile" uid="uid://crfmxpkcegx7" path="res://Assets/LuckiestGuy-Regular.ttf" id="3_4wwrq"]
+[ext_resource type="PackedScene" uid="uid://ccdspmscchslo" path="res://Scenes/LevelButton/LevelButton.tscn" id="4_4wwrq"]
 
-[node name="LevelSelector" type="Control" unique_id=1934769558]
+[sub_resource type="LabelSettings" id="LabelSettings_v7dfu"]
+font = ExtResource("3_4wwrq")
+font_size = 72
+font_color = Color(0.17394093, 0.69905585, 0.5306293, 1)
+outline_size = 7
+outline_color = Color(0.043137256, 0.043137256, 0, 1)
+
+[node name="LevelSelector" type="Control" unique_id=1934769558 node_paths=PackedStringArray("_gridContainer")]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_1ier4")
+_levelButtonScene = ExtResource("4_4wwrq")
+_gridContainer = NodePath("MarginContainer/VBoxContainer/GridContainer")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=949701371]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_8ihno")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=455373041]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1448065959]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=41869851]
+layout_mode = 2
+text = "Soko Shift"
+label_settings = SubResource("LabelSettings_v7dfu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=1230958369]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 6

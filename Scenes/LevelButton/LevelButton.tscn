@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://ccdspmscchslo"]
+
+[ext_resource type="Texture2D" uid="uid://bughigfciy1vb" path="res://Assets/blue_panel.png" id="1_3681o"]
+[ext_resource type="Script" uid="uid://brk26m0orwuom" path="res://Scenes/LevelButton/LevelButton.cs" id="2_3r2e7"]
+[ext_resource type="FontFile" uid="uid://crfmxpkcegx7" path="res://Assets/LuckiestGuy-Regular.ttf" id="2_145gk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3r2e7"]
+font = ExtResource("2_145gk")
+font_size = 42
+outline_size = 6
+outline_color = Color(0.17641911, 0.17641908, 0.17641908, 1)
+
+[node name="LevelButton" type="NinePatchRect" unique_id=2055217797 node_paths=PackedStringArray("_label")]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 64.0
+offset_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+texture = ExtResource("1_3681o")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+script = ExtResource("2_3r2e7")
+_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="." unique_id=1354470317]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "00"
+label_settings = SubResource("LabelSettings_3r2e7")

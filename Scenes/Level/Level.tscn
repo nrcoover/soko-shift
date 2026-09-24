@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bhbsoadqhqgau" path="res://Scenes/Level/Level.cs" id="1_vbawi"]
 [ext_resource type="Texture2D" uid="uid://b4e3hjnve65u" path="res://Assets/spritesheet.png" id="2_3hkb6"]
+[ext_resource type="Texture2D" uid="uid://0dpjrnl6m2lw" path="res://Assets/Bg.png" id="2_qp1lj"]
 [ext_resource type="PackedScene" uid="uid://5j426142i2k5" path="res://Scenes/Player/Player.tscn" id="3_4dwx7"]
+[ext_resource type="PackedScene" uid="uid://cocp7drfbp6y8" path="res://Scenes/GameUi/GameUi.tscn" id="5_k2uda"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4dwx7"]
 resource_name = "primary"
@@ -30,7 +32,7 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_4dwx7")
 
-[node name="Level" type="Node" unique_id=1571236048 node_paths=PackedStringArray("_tileLayers", "_floorTiles", "_wallsTiles", "_targetsTiles", "_boxesTiles", "_debug", "_player")]
+[node name="Level" type="Node" unique_id=1571236048 node_paths=PackedStringArray("_tileLayers", "_floorTiles", "_wallsTiles", "_targetsTiles", "_boxesTiles", "_debug", "_player", "_gameUi")]
 script = ExtResource("1_vbawi")
 _tileLayers = NodePath("TileLayers")
 _floorTiles = NodePath("TileLayers/Floor")
@@ -39,6 +41,13 @@ _targetsTiles = NodePath("TileLayers/Targets")
 _boxesTiles = NodePath("TileLayers/Boxes")
 _debug = NodePath("Debug")
 _player = NodePath("Player")
+_gameUi = NodePath("GameUi")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1221135013]
+self_modulate = Color(1.4369954, 1.4369954, 1.4369954, 1)
+position = Vector2(854.00006, 799)
+scale = Vector2(1.7226431, 1.7226431)
+texture = ExtResource("2_qp1lj")
 
 [node name="TileLayers" type="Node2D" parent="." unique_id=1435395518]
 
@@ -62,3 +71,5 @@ region_enabled = true
 region_rect = Rect2(212, 23, 24, 22)
 
 [node name="Player" parent="." unique_id=2042970125 instance=ExtResource("3_4dwx7")]
+
+[node name="GameUi" parent="." unique_id=1868505527 instance=ExtResource("5_k2uda")]

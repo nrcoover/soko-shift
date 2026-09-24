@@ -1,15 +1,17 @@
 using Godot;
-using System;
 
 public partial class LevelSelector : Control
 {
-	// Called when the node enters the scene tree for the first time.
+	[Export] private PackedScene _levelButtonScene;
+	[Export] private GridContainer _gridContainer;
+
 	public override void _Ready()
 	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		foreach(var item in LevelData.GetLevelNumbers())
+		{
+			var levelButton = _levelButtonScene.Instantiate<LevelButton>();
+			levelButton.Setup(item);
+			_gridContainer.AddChild(levelButton);
+		}
 	}
 }

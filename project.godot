@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SokoShift"
-run/main_scene="uid://thiiij6vbtn1"
+run/main_scene="uid://cdk43k1b30dhq"
 config/features=PackedStringArray("4.6", "C#", "Mobile")
 config/icon="res://icon.svg"
 

@@ -14,6 +14,7 @@ public partial class Level : Node
 	[Export] private TileMapLayer _boxesTiles;
 	[Export] private Sprite2D _debug;
 	[Export] private AnimatedSprite2D _player;
+	[Export] private GameUi _gameUi;
 
 	private Vector2I _playerTile;
 
@@ -24,6 +25,12 @@ public partial class Level : Node
 
   public override void _UnhandledInput(InputEvent @event)
   {
+		if(@event.IsActionPressed("ui_cancel"))
+		{
+			GameManager.LoadLevelSelect();
+			return;
+		}
+
     Vector2I moveInput = GetMoveInput(@event);
 		MovePlayer(moveInput);
   }
@@ -58,6 +65,11 @@ public partial class Level : Node
 
 	private void MovePlayer(Vector2I moveInput)
 	{
+		if(Vector2I.Zero == moveInput)
+		{
+			return;
+		}
+		
 		Vector2I destinationTile = _playerTile + moveInput;
 
 		if(CellIsWall(destinationTile))
@@ -75,6 +87,8 @@ public partial class Level : Node
 		}
 
 		PlacePlayerOnTile(destinationTile);
+
+		_gameUi.IncrementMoves();
 	}
 
 	private void MoveBox(Vector2I boxCell, Vector2I direction)
@@ -174,7 +188,7 @@ public partial class Level : Node
 	{
 		ClearTiles();
 
-		LevelLayout levelLayout = LevelData.GetLevelData("26");
+		LevelLayout levelLayout = LevelData.GetLevelData(GameManager.SelectedLevel);
 
 		SetupLayer(TileLayerType.Floor, _floorTiles, levelLayout);
 		SetupLayer(TileLayerType.Walls, _wallsTiles, levelLayout);

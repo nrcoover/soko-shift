@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://cocp7drfbp6y8"]
+
+[ext_resource type="Script" uid="uid://l8h12ay2ehmn" path="res://Scenes/GameUi/GameUi.cs" id="1_anb74"]
+[ext_resource type="LabelSettings" uid="uid://w57gx7t1nsvs" path="res://Resources/UiLabel40.tres" id="1_mb7aw"]
+
+[node name="GameUi" type="Control" unique_id=1868505527 node_paths=PackedStringArray("_levelLabel", "_movesLabel", "_bestLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_anb74")
+_levelLabel = NodePath("MarginContainer/HBox/LevelLabel")
+_movesLabel = NodePath("MarginContainer/HBox2/MovesLabel")
+_bestLabel = NodePath("MarginContainer/HBox3/BestLabel")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=955931543]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer" unique_id=762415660]
+layout_mode = 2
+
+[node name="LevelTitle" type="Label" parent="MarginContainer/HBox" unique_id=114388964]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Level"
+label_settings = ExtResource("1_mb7aw")
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/HBox" unique_id=287178746]
+layout_mode = 2
+text = "00"
+label_settings = ExtResource("1_mb7aw")
+
+[node name="HBox2" type="HBoxContainer" parent="MarginContainer" unique_id=1930825317]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MovesTitle" type="Label" parent="MarginContainer/HBox2" unique_id=1305210604]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Moves"
+label_settings = ExtResource("1_mb7aw")
+
+[node name="MovesLabel" type="Label" parent="MarginContainer/HBox2" unique_id=1646546836]
+layout_mode = 2
+text = "0000"
+label_settings = ExtResource("1_mb7aw")
+
+[node name="HBox3" type="HBoxContainer" parent="MarginContainer" unique_id=443716939]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="BestTitle" type="Label" parent="MarginContainer/HBox3" unique_id=1720361369]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Best"
+label_settings = ExtResource("1_mb7aw")
+
+[node name="BestLabel" type="Label" parent="MarginContainer/HBox3" unique_id=1059229029]
+layout_mode = 2
+text = "000"
+label_settings = ExtResource("1_mb7aw")
