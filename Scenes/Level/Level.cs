@@ -17,6 +17,7 @@ public partial class Level : Node
 	[Export] private GameUi _gameUi;
 
 	private Vector2I _playerTile;
+	private bool _gameOver = false;
 
 	public override void _Ready()
 	{
@@ -31,30 +32,55 @@ public partial class Level : Node
 			return;
 		}
 
+		if(@event.IsActionPressed("reload"))
+		{
+			GetTree().ReloadCurrentScene();
+			return;
+		}
+
     Vector2I moveInput = GetMoveInput(@event);
 		MovePlayer(moveInput);
   }
+
+	private void CheckGameState()
+	{
+		var targetsTiles = _targetsTiles.GetUsedCells();
+		foreach (Vector2I cell in targetsTiles)
+		{
+			if (!CellIsBox(cell)) {
+				return;
+			}
+
+			_gameOver = true;
+			_gameUi.GameOver();
+		}
+	}
 
 	private Vector2I GetMoveInput(InputEvent @event)
 	{
 		Vector2I moveDirection = Vector2I.Zero;
 
-		if(Input.IsActionJustPressed("left"))
+		if (_gameOver)
+		{
+			return moveDirection;
+		}
+		
+		if (Input.IsActionJustPressed("left"))
 		{
 			moveDirection = Vector2I.Left;
 			_player.Play("left");
 		}
-		else if(Input.IsActionJustPressed("right"))
+		else if (Input.IsActionJustPressed("right"))
 		{
 			moveDirection = Vector2I.Right;
 			_player.Play("right");
 		}
-		else if(Input.IsActionJustPressed("up"))
+		else if (Input.IsActionJustPressed("up"))
 		{
 			moveDirection = Vector2I.Up;
 			_player.Play("up");
 		}
-		else if(Input.IsActionJustPressed("down"))
+		else if (Input.IsActionJustPressed("down"))
 		{
 			moveDirection = Vector2I.Down;
 			_player.Play("down");
@@ -65,30 +91,32 @@ public partial class Level : Node
 
 	private void MovePlayer(Vector2I moveInput)
 	{
-		if(Vector2I.Zero == moveInput)
+		if (Vector2I.Zero == moveInput)
 		{
 			return;
 		}
 		
 		Vector2I destinationTile = _playerTile + moveInput;
 
-		if(CellIsWall(destinationTile))
+		if (CellIsWall(destinationTile))
 		{
 			return;
 		}
 
-		if(CellIsBox(destinationTile) && !BoxCanMove(destinationTile, moveInput))
+		if (CellIsBox(destinationTile) && !BoxCanMove(destinationTile, moveInput))
 		{
 			return;
 		}
 
-		if(CellIsBox(destinationTile)) {
+		if (CellIsBox(destinationTile)) {
 			MoveBox(destinationTile, moveInput);	
 		}
 
 		PlacePlayerOnTile(destinationTile);
 
 		_gameUi.IncrementMoves();
+
+		CheckGameState();
 	}
 
 	private void MoveBox(Vector2I boxCell, Vector2I direction)
@@ -98,7 +126,7 @@ public partial class Level : Node
 
 		TileLayerType layerType = TileLayerType.Boxes;
 
-		if(_targetsTiles.GetUsedCells().Contains(destinationCell))
+		if (_targetsTiles.GetUsedCells().Contains(destinationCell))
 		{
 			layerType = TileLayerType.TargetBoxes;
 		}
@@ -128,7 +156,7 @@ public partial class Level : Node
 
 	private void ClearTiles()
 	{
-		foreach(var tileLayer in _tileLayers.GetChildren())
+		foreach (var tileLayer in _tileLayers.GetChildren())
 		{
 			if (tileLayer is TileMapLayer layer)
 			{
@@ -139,7 +167,7 @@ public partial class Level : Node
 
 	private Vector2I GetAtlasCoordinate(TileLayerType layerType)
 	{
-		switch(layerType)
+		switch (layerType)
 		{
 			case TileLayerType.Walls:
 				return new Vector2I(0, 0);
@@ -163,7 +191,7 @@ public partial class Level : Node
 
 	private void SetupLayer(TileLayerType layerType, TileMapLayer mapLayer, LevelLayout levelLayout)
 	{
-		foreach(var tileCoordinate in levelLayout.TileLayers.GetLayerTiles(layerType))
+		foreach (var tileCoordinate in levelLayout.TileLayers.GetLayerTiles(layerType))
 		{
 			AddTile(layerType, tileCoordinate, mapLayer);
 		}

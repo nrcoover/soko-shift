@@ -2,8 +2,28 @@
 
 [ext_resource type="Script" uid="uid://l8h12ay2ehmn" path="res://Scenes/GameUi/GameUi.cs" id="1_anb74"]
 [ext_resource type="LabelSettings" uid="uid://w57gx7t1nsvs" path="res://Resources/UiLabel40.tres" id="1_mb7aw"]
+[ext_resource type="FontFile" uid="uid://crfmxpkcegx7" path="res://Assets/LuckiestGuy-Regular.ttf" id="3_anolp"]
 
-[node name="GameUi" type="Control" unique_id=1868505527 node_paths=PackedStringArray("_levelLabel", "_movesLabel", "_bestLabel")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_anb74"]
+content_margin_left = 48.0
+content_margin_top = 48.0
+content_margin_right = 48.0
+content_margin_bottom = 48.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_tt7lr"]
+font = ExtResource("3_anolp")
+font_size = 72
+font_color = Color(0.46382394, 1.0286087, 0.63095415, 1)
+outline_size = 7
+outline_color = Color(0.043137256, 0.043137256, 0, 1)
+
+[node name="GameUi" type="Control" unique_id=1868505527 node_paths=PackedStringArray("_levelLabel", "_movesLabel", "_bestLabel", "_gameOverPanel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +34,7 @@ script = ExtResource("1_anb74")
 _levelLabel = NodePath("MarginContainer/HBox/LevelLabel")
 _movesLabel = NodePath("MarginContainer/HBox2/MovesLabel")
 _bestLabel = NodePath("MarginContainer/HBox3/BestLabel")
+_gameOverPanel = NodePath("GameOverPanel")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=955931543]
 layout_mode = 1
@@ -67,3 +88,23 @@ label_settings = ExtResource("1_mb7aw")
 layout_mode = 2
 text = "000"
 label_settings = ExtResource("1_mb7aw")
+
+[node name="GameOverPanel" type="PanelContainer" parent="." unique_id=1999777399]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_anb74")
+
+[node name="Label" type="Label" parent="GameOverPanel" unique_id=1201836631]
+layout_mode = 2
+text = "LEvel Complete!"
+label_settings = SubResource("LabelSettings_tt7lr")
