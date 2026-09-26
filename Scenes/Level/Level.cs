@@ -50,10 +50,10 @@ public partial class Level : Node
 			if (!CellIsBox(cell)) {
 				return;
 			}
-
-			_gameOver = true;
-			SignalManager.EmitGameOver();
 		}
+		
+		_gameOver = true;
+		SignalManager.EmitGameOver();
 	}
 
 	private Vector2I GetMoveInput(InputEvent @event)
