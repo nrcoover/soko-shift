@@ -52,7 +52,7 @@ public partial class Level : Node
 			}
 
 			_gameOver = true;
-			_gameUi.GameOver();
+			SignalManager.EmitGameOver();
 		}
 	}
 
@@ -114,7 +114,7 @@ public partial class Level : Node
 
 		PlacePlayerOnTile(destinationTile);
 
-		_gameUi.IncrementMoves();
+		SignalManager.EmitIncrementMoves();
 
 		CheckGameState();
 	}
